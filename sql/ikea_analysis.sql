@@ -6,28 +6,38 @@ select count(*) as row_2009_2010 from dbo.[year 2010-2011];
 
 --comine both table useing union all---
 
-select 
-    Invoice, StockCode,Description,Quantity,
+SELECT
+    Invoice,
+    StockCode,
+    Description,
+    Quantity,
     COALESCE(
         TRY_CONVERT(datetime2, InvoiceDate, 120),
         TRY_CONVERT(datetime2, InvoiceDate, 105)
-        ) As InvoiceDate,
-        TRY_CONVERT(decimal(10,2), Price) AS Price,
-        Customer_ID, Country, '2009-2010' AS SourceSheet
-    INTO dbo.RetailCombined
-    FROM dbo.[year 2009-2010]
+    ) AS InvoiceDate,
+    TRY_CONVERT(decimal(10,2), Price) AS Price,
+    Customer_ID,
+    Country,
+    '2009-2010' AS SourceSheet
+INTO dbo.RetailCombined
+FROM dbo.[year 2009-2010]
 
-    UNION ALL
+UNION ALL
 
-    select 
-    Invoice, StockCode,Description,Quantity,
+SELECT
+    Invoice,
+    StockCode,
+    Description,
+    Quantity,
     COALESCE(
         TRY_CONVERT(datetime2, InvoiceDate, 120),
         TRY_CONVERT(datetime2, InvoiceDate, 105)
-        ) As InvoiceDate,
-        TRY_CONVERT(decimal(10,2), Price) AS Price,
-        Customer_ID, Country, '2009-2010' AS SourceSheet
-    FROM dbo.[year 2010-2011]
+    ) AS InvoiceDate,
+    TRY_CONVERT(decimal(10,2), Price) AS Price,
+    Customer_ID,
+    Country,
+    '2010-2011' AS SourceSheet
+FROM dbo.[year 2010-2011];
 
     --- null handling---
 SELECT COUNT(*) AS TOTAL_ROWS FROM dbo.RetailCombined
